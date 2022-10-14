@@ -9,6 +9,7 @@ from .serializers import RegisterSerializer, UserReadBlogsSerializer, UserSerial
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from api.v1.account import filters
+from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -16,6 +17,7 @@ User = get_user_model()
 class RegisterApi(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
 
 
 class UserList(generics.ListAPIView):
