@@ -11,6 +11,14 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            author = request.user
+            serializer.save(author=author)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 class BlogDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer

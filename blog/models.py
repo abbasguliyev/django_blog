@@ -18,7 +18,7 @@ class Blog(models.Model):
     created_date = models.DateField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="blogs")
     image = models.ImageField(upload_to="media/%Y/%m/%d/", null=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blogs")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="blogs")
 
     def __str__(self) -> str:
         return self.title
