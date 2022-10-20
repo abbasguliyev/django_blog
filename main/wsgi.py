@@ -16,4 +16,3 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'main.settings')
 application = get_wsgi_application()
 application = WhiteNoise(application, root="/static")
 application.add_files("/static", prefix="more-files/")
-/home/abbas/Workspace/django_blog/static
