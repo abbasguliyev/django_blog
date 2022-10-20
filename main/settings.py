@@ -210,7 +210,7 @@ CORS_ALLOW_HEADERS = [
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = 'static/'
+STATIC_ROOT = 'static/'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 MEDIA_URL = 'media/'
