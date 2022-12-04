@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django_filters',
     "corsheaders",
     'ckeditor',
+    'drf_yasg',
     
     # apps
     'account.apps.AccountConfig',
