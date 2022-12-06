@@ -49,4 +49,4 @@ ARG COMMIT_ID
 ARG PROJECT_VERSION
 ENV PROJECT_VERSION="${PROJECT_VERSION}"
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "--worker-class", "gevent", "--worker-connections", "500" "core.wsgi:application"]
+CMD ["gunicorn", "--bind", ":8001", "--workers", "3", "--worker-class", "gevent", "--worker-connections", "500" "core.wsgi:application"]

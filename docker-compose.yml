@@ -15,14 +15,14 @@ services:
     # '/start' is the shell script used to run the service
     #command: python manage.py runserver 0.0.0.0:8000
     # command: gunicorn --bind 0.0.0.0:8000 --timeout 200 core.wsgi --worker-class gevent
-    command: gunicorn --bind 0.0.0.0:8000 --worker-class=gevent --worker-connections=500 --workers=3 core.wsgi
+    command: gunicorn --bind 0.0.0.0:8001 --worker-class=gevent --worker-connections=500 --workers=3 core.wsgi
     # this volume is used to map the files and folders on the host to the container
     # so if we change code on the host, code in the docker container will also be changed
     volumes:
       - ./app/core:/app/core
       - media:/app/media
     ports:
-      - 8000:8000
+      - 8001:8001
     # env_file is used to manage the env variables of our project
     depends_on:
       - db
