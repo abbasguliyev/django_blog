@@ -33,11 +33,11 @@ DEBUG = False
 
 
 ALLOWED_HOSTS = ['api.vilayatsafarov.com','37.26.63.164']
-CSRF_TRUSTED_ORIGINS = ['https://api.vilayatsafarov.com/']
+# CSRF_TRUSTED_ORIGINS = ['https://api.vilayatsafarov.com/']
 
-CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
 # SESSION_COOKIE_SECURE = False
-ALLOWED_ORIGINS = ['http://*', 'https://*']
+# ALLOWED_ORIGINS = ['http://*', 'https://*']
 
 # Application definition
 
