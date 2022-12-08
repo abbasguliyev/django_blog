@@ -32,12 +32,12 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['api.vilayatsafarov.com','37.26.63.164','[::1]']
+ALLOWED_HOSTS = ['api.vilayatsafarov.com','37.26.63.164']
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 # SESSION_COOKIE_SECURE = False
 ALLOWED_ORIGINS = ['http://*', 'https://*']
-CSRF_TRUSTED_ORIGINS = ['api.vilayatsafarov.com','37.26.63.164','[::1]']
+CSRF_TRUSTED_ORIGINS = ['api.vilayatsafarov.com']
 
 # Application definition
 
