@@ -33,7 +33,8 @@ DEBUG = False
 
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
-CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
+ALLOWED_ORIGINS = ['http://*', 'https://*']
+CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
 
 ALLOWED_HOSTS = ['api.vilayatsafarov.com','37.26.63.164']
 
