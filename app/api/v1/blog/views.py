@@ -5,7 +5,6 @@ from api.v1.blog.serializers import BlogSerializer, CategorySerializer
 from django.contrib.auth import get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
 from api.v1.blog import filters
-from rest_framework import pagination
 from main.permissions import IsAdminUserOrReadOnly
 
 User = get_user_model()
@@ -15,7 +14,6 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = BlogSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.BlogFilter
-    pagination.LimitOffsetPagination.page_size = 3 
     permission_classes = (IsAdminUserOrReadOnly, )
 
     def create(self, request, *args, **kwargs):
