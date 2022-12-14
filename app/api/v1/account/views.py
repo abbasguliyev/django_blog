@@ -9,8 +9,9 @@ from .serializers import RegisterSerializer, UserSerializer, UserWishListSeriali
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from api.v1.account import filters
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from django.contrib.auth import get_user_model
+from api.v1.permissions import IsOwner, IsOwnerUser
 
 User = get_user_model()
 
@@ -85,6 +86,7 @@ class UserWishListListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = UserWishListSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.UserWishListFilter
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -107,6 +109,7 @@ class UserWishListListCreateAPIView(generics.ListCreateAPIView):
 class UserWishListDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserWishList.objects.all()
     serializer_class = UserWishListSerializer
+    permission_classes = [IsOwnerUser,]
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()

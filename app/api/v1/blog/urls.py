@@ -7,4 +7,7 @@ urlpatterns = [
 
     path('categories/', views.CategoryListCreateAPIView.as_view()),
     path('categories/<int:pk>/', views.CategoryDetailAPIView.as_view()),
+
+    path('questions/', views.QuestionsListCreateAPIView.as_view()),
+    path('questions/<int:pk>/', views.QuestionsDetailAPIView.as_view()),
 ]

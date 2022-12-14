@@ -21,3 +21,11 @@ class Blog(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+class Questions(models.Model):
+    title = models.CharField(max_length=500)
+    subject = models.TextField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="questions")
+
+    def __str__(self) -> str:
+        return self.title

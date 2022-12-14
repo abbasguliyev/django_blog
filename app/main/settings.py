@@ -33,6 +33,7 @@ DEBUG = False
 
 
 ALLOWED_HOSTS = ['api.vilayatsafarov.com','37.26.63.164']
+# ALLOWED_HOST = ['*']
 # CSRF_TRUSTED_ORIGINS = ['https://api.vilayatsafarov.com/']
 
 # CSRF_COOKIE_SECURE = False

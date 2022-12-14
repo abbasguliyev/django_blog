@@ -1,15 +1,18 @@
 from rest_framework import status, generics
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from contact.models import Contact
 from api.v1.contact.serializers import ContactSerializer
 
 class ContactListCreateAPIView(generics.ListCreateAPIView):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    permission_classes = [AllowAny,]
 
 class ContactDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    permission_classes = [AllowAny,]
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()

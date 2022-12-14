@@ -1,6 +1,6 @@
 import django_filters
 
-from blog.models import Blog, Category
+from blog.models import Blog, Category, Questions
 
 class BlogFilter(django_filters.FilterSet):
     class Meta:
@@ -18,4 +18,12 @@ class CategoryFilter(django_filters.FilterSet):
         model = Category
         fields = {
             'category_name': ['exact']
+        }
+
+class QuestionsFilter(django_filters.FilterSet):
+    class Meta:
+        model = Questions
+        fields = {
+            'title': ['exact', 'icontains'],
+            'subject': ['exact', 'icontains'],
         }
