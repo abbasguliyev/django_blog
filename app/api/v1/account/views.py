@@ -54,6 +54,7 @@ class CurrentUser(APIView):
 
 
 class Login(TokenObtainPairView):
+    permission_classes = [AllowAny,]
     def post(self, request, *args, **kwargs):
         data = super().post(request, *args, **kwargs)
 
