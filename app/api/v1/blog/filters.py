@@ -24,6 +24,7 @@ class QuestionsFilter(django_filters.FilterSet):
     class Meta:
         model = Questions
         fields = {
+            'author' : ['exact'],
             'title': ['exact', 'icontains'],
             'subject': ['exact', 'icontains'],
         }
