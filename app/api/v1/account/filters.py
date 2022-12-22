@@ -1,8 +1,19 @@
 import django_filters
 
 from account.models import (
-    UserWishList
+    UserWishList,
+    User
 )
+
+
+class UserFilter(django_filters.FilterSet):
+    class Meta:
+        model = User
+        fields = {
+            'username': ['exact', 'icontains'],
+            'email': ['exact', 'icontains'],
+            'is_superuser': ['exact']
+        }
 
 class UserWishListFilter(django_filters.FilterSet):
     class Meta:

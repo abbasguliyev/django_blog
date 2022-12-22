@@ -20,13 +20,14 @@ class RegisterApi(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.UserFilter
 
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+class UserDetail(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -42,6 +43,10 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
             instance._prefetched_objects_cache = {}
 
         return Response(serializer.data)
+
+class UserDestroy(generics.DestroyAPIView):
+    queryset = User.objects.filter(is_superuser=False)
+    serializer_class = UserSerializer
 
 class CurrentUser(APIView):
     def get(self, request):

@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import token_refresh
 urlpatterns = [
     path('', views.UserList.as_view()),
     path('<int:pk>/', views.UserDetail.as_view()),
+    path('user-delete/<int:pk>/', views.UserDestroy.as_view()),
     path('me/', views.CurrentUser.as_view()),
     path('register/', views.RegisterApi.as_view()),
     path("login/", views.Login.as_view()),
