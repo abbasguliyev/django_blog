@@ -1,0 +1,8 @@
+DEBUG=False
+SECRET_KEY=test
+ALLOWED_HOSTS=localhost,127.0.0.1
+DB_NAME=django_blog
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=5432
