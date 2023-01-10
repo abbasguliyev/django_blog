@@ -29,7 +29,7 @@ load_dotenv(find_dotenv())
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 if DEBUG==False:
     ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(',')
