@@ -2,15 +2,25 @@ from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from contact.models import Contact
-from api.v1.contact.serializers import ContactSerializer
+from contact.api.serializers import ContactSerializer
+from contact.api.selectors import contact_list
+from contact.api.services import create_contact, update_contact
 
 class ContactListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Contact.objects.all()
+    queryset = contact_list()
     serializer_class = ContactSerializer
     permission_classes = [AllowAny,]
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        create_contact(**serializer.validated_data)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
 class ContactDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Contact.objects.all()
+    queryset = contact_list()
     serializer_class = ContactSerializer
     permission_classes = [AllowAny,]
 
@@ -18,11 +28,5 @@ class ContactDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = {}
-
+        update_contact(instance=instance, **serializer.validated_data)
         return Response(serializer.data)

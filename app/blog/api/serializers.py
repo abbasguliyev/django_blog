@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from blog.models import Blog, Category, Questions
-from api.v1.account.serializers import UserSerializer
+from account.api.serializers import UserSerializer
 
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:

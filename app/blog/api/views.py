@@ -1,16 +1,16 @@
 from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from blog.models import Blog, Category, Questions
-from api.v1.blog.serializers import BlogSerializer, CategorySerializer, QuestionsSerializer
+from blog.api.serializers import BlogSerializer, CategorySerializer, QuestionsSerializer
 from django.contrib.auth import get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
-from api.v1.blog import filters
+from blog.api import filters, selectors, services
 from main.permissions import IsAdminUserOrReadOnly
-from api.v1.permissions import IsOwner
+from main.permissions import IsOwner
 User = get_user_model()
 
 class BlogListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Blog.objects.all()
+    queryset = selectors.blog_list()
     serializer_class = BlogSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.BlogFilter
@@ -18,14 +18,14 @@ class BlogListCreateAPIView(generics.ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            author = request.user
-            serializer.save(author=author)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+        serializer.is_valid(raise_exception=True)
+        user = request.user
+        services.create_blog(user=user, **serializer.validated_data)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class BlogDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Blog.objects.all()
+    queryset = selectors.blog_list()
     serializer_class = BlogSerializer
     permission_classes = (IsAdminUserOrReadOnly, )
 
@@ -33,25 +33,25 @@ class BlogDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = {}
-
+        services.update_blog(instance=instance, **serializer.validated_data)
         return Response(serializer.data)
 
-
 class CategoryListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Category.objects.all()
+    queryset = selectors.category_list()
     serializer_class = CategorySerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.CategoryFilter
     permission_classes = (IsAdminUserOrReadOnly, )
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        services.create_category(**serializer.validated_data)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
+    queryset = selectors.category_list()
     serializer_class = CategorySerializer
     permission_classes = (IsAdminUserOrReadOnly, )
 
@@ -59,18 +59,11 @@ class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = {}
-
+        services.update_category(instance=instance, **serializer.validated_data)
         return Response(serializer.data)
 
-
 class QuestionsListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Questions.objects.all()
+    queryset = selectors.questions_list()
     serializer_class = QuestionsSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.QuestionsFilter
@@ -80,13 +73,13 @@ class QuestionsListCreateAPIView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = request.user
-        serializer.save(owner=user)
+        services.create_question(user=user, **serializer.validated_data)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class QuestionsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Questions.objects.all()
+    queryset = selectors.questions_list()
     serializer_class = QuestionsSerializer
     permission_classes = [IsOwner,]
 
@@ -94,11 +87,5 @@ class QuestionsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = {}
-
+        services.update_question(instance=instance, **serializer.validated_data)
         return Response(serializer.data)

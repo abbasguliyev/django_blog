@@ -31,14 +31,13 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+if DEBUG==False:
+    ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(',')
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-ALLOWED_HOSTS = ['api.vilayatsafarov.com','37.26.63.164']
-# ALLOWED_HOST = ['*']
-# CSRF_TRUSTED_ORIGINS = ['https://api.vilayatsafarov.com/']
-
-# CSRF_COOKIE_SECURE = False
-# SESSION_COOKIE_SECURE = False
-# ALLOWED_ORIGINS = ['http://*', 'https://*']
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 

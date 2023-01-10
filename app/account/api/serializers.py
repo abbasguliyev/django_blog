@@ -13,19 +13,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
         }
 
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            email=validated_data['email'], 
-            username=validated_data['username'],
-            password=validated_data['password']
-        )
-        return user
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name',
-                  'email', 'username')
+        fields = ('id', 'email', 'username')
 
 
 class UserWishListSerializer(serializers.ModelSerializer):    
