@@ -1,24 +1,22 @@
 import json
 
 from django.contrib.messages.storage.base import BaseStorage
-from django.contrib.messages.storage.cookie import MessageDecoder, MessageEncoder
-from django.core.exceptions import ImproperlyConfigured
+from django.contrib.messages.storage.cookie import (
+    MessageDecoder, MessageEncoder,
+)
 
 
 class SessionStorage(BaseStorage):
     """
     Store messages in the session (that is, django.contrib.sessions).
     """
-
-    session_key = "_messages"
+    session_key = '_messages'
 
     def __init__(self, request, *args, **kwargs):
-        if not hasattr(request, "session"):
-            raise ImproperlyConfigured(
-                "The session-based temporary message storage requires session "
-                "middleware to be installed, and come before the message "
-                "middleware in the MIDDLEWARE list."
-            )
+        assert hasattr(request, 'session'), "The session-based temporary "\
+            "message storage requires session middleware to be installed, "\
+            "and come before the message middleware in the "\
+            "MIDDLEWARE list."
         super().__init__(request, *args, **kwargs)
 
     def _get(self, *args, **kwargs):
@@ -27,10 +25,7 @@ class SessionStorage(BaseStorage):
         always stores everything it is given, so return True for the
         all_retrieved flag.
         """
-        return (
-            self.deserialize_messages(self.request.session.get(self.session_key)),
-            True,
-        )
+        return self.deserialize_messages(self.request.session.get(self.session_key)), True
 
     def _store(self, messages, response, *args, **kwargs):
         """

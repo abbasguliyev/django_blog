@@ -1,4 +1,4 @@
-#!/home/abbas/Workspace/django_blog/.venv/bin/python3
+#!/home/abbas/Workspace/personal_projects/django_blog/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

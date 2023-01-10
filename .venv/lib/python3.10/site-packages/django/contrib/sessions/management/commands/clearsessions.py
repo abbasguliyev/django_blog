@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand, CommandError
 class Command(BaseCommand):
     help = (
         "Can be run as a cronjob or directly to clean out expired sessions "
-        "when the backend supports it."
+        "(only with the database backend at the moment)."
     )
 
     def handle(self, **options):

@@ -3,13 +3,13 @@
 # Translators:
 # Jannis Leidel <jannis@leidel.info>, 2011
 # Leonardo José Guzmán <ljguzman@gmail.com>, 2013
-# Ramiro Morales, 2013-2022
+# Ramiro Morales, 2013-2021
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-17 05:10-0500\n"
-"PO-Revision-Date: 2022-07-25 07:05+0000\n"
+"POT-Creation-Date: 2021-01-15 09:00+0100\n"
+"PO-Revision-Date: 2021-03-21 12:55+0000\n"
 "Last-Translator: Ramiro Morales\n"
 "Language-Team: Spanish (Argentina) (http://www.transifex.com/django/django/"
 "language/es_AR/)\n"
@@ -268,9 +268,8 @@ msgstr "0 de %(cnt)s seleccionados/as"
 msgid "Change history: %s"
 msgstr "Historia de modificaciones: %s"
 
-#. Translators: Model verbose name and instance
-#. representation, suitable to be an item in a
-#. list.
+#. Translators: Model verbose name and instance representation,
+#. suitable to be an item in a list.
 #, python-format
 msgid "%(class_name)s %(instance)s"
 msgstr "%(class_name)s %(instance)s"
@@ -529,13 +528,7 @@ msgid "Forgotten your password or username?"
 msgstr "¿Olvidó su contraseña o nombre de usuario?"
 
 msgid "Toggle navigation"
-msgstr "(des)activar navegación"
-
-msgid "Start typing to filter…"
-msgstr "Empiece a escribir para filtrar…"
-
-msgid "Filter navigation items"
-msgstr "Filtrar elementos de navegación"
+msgstr "(des)activar ordenamiento"
 
 msgid "Date/time"
 msgstr "Fecha/hora"
@@ -545,12 +538,6 @@ msgstr "Usuario"
 
 msgid "Action"
 msgstr "Acción"
-
-msgid "entry"
-msgstr "entrada"
-
-msgid "entries"
-msgstr "entradas"
 
 msgid ""
 "This object doesn’t have a change history. It probably wasn’t added via this "
@@ -608,11 +595,7 @@ msgstr "Agregar otro/a %(model)s"
 msgid "Delete selected %(model)s"
 msgstr "Eliminar %(model)s seleccionados/as"
 
-#, python-format
-msgid "View selected %(model)s"
-msgstr "Ver %(model)s seleccionado/a"
-
-msgid "Thanks for spending some quality time with the web site today."
+msgid "Thanks for spending some quality time with the Web site today."
 msgstr "Gracias por el tiempo que ha dedicado al sitio web hoy."
 
 msgid "Log in again"
