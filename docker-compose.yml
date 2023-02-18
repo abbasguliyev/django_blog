@@ -1,15 +1,10 @@
-version: '3.3'
+version: '3.9'
 
 services:
   db:
-    image: library/postgres:13.2-alpine
-    restart: unless-stopped
-    networks:
-      - app-network
+    image: postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - 54033:5432
+      - ./app/db:/var/lib/postgres/data
     env_file:
       - ./app/.env
     environment:
@@ -18,31 +13,16 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
   web:
-    build:
-      context: ./app
-      dockerfile: ./Dockerfile
+    build: ./app
     command: >
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py migrate &&
-             gunicorn main.wsgi:application --bind 0.0.0.0:9120 --workers 4"
-    networks:
-      - app-network
+             gunicorn main.wsgi:application --bind 0.0.0.0:8000 --workers 4"
     volumes:
-      - ./app/core:/app/core
-      - media:/app/media
+      - ./app:/code
     ports:
-      - 9120:9120
+      - "8000:8000"
     env_file:
       - ./app/.env
     depends_on:
       - db
-
-volumes:
-  postgres_data:
-    driver: local
-  media:  
-    driver: local
-
-networks:
-  app-network:
-    driver: bridge
