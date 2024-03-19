@@ -30,7 +30,7 @@ services:
              gunicorn --bind 0.0.0.0:8000 --timeout 300 --worker-class=gevent --worker-connections=1000 --workers=5 main.wsgi"
     volumes:
       - ./src:/src
-      - ./src/vizy_well:/src/vizy_well
+      - ./src/main:/src/main
       - ./src/static:/src/static
       - ./src/media:/src/media
     ports:
@@ -39,6 +39,15 @@ services:
       - .env
     depends_on:
       - db
+
+volumes:
+  static:
+    driver: local
+  media:
+    driver: local
+  web:
+    driver: local
+
 
 networks:
   django-blob-network:
