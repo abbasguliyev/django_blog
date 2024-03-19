@@ -2,27 +2,44 @@ version: '3.9'
 
 services:
   db:
+    restart: always
     image: postgres
     volumes:
-      - ./src/db:/var/lib/postgres/data
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "54035:5432"
+    networks:
+      - django-blob-network
     env_file:
-      - ./src/.env
+      - .env
     environment:
       - POSTGRES_HOST=${DB_HOST}
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_WORK_MEM='128MB'
   web:
+    restart: always
     build: ./src
+    networks:
+      - django-blob-network
     command: >
       sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigrations &&
              python manage.py migrate &&
-             gunicorn main.wsgi:application --bind 0.0.0.0:8000 --workers 4"
+             gunicorn --bind 0.0.0.0:8000 --timeout 300 --worker-class=gevent --worker-connections=1000 --workers=5 main.wsgi"
     volumes:
-      - ./src:/code
+      - ./src:/src
+      - ./src/vizy_well:/src/vizy_well
+      - ./src/static:/src/static
+      - ./src/media:/src/media
     ports:
       - "8000:8000"
     env_file:
-      - ./src/.env
+      - .env
     depends_on:
       - db
+
+networks:
+  django-blob-network:
+    driver: bridge
