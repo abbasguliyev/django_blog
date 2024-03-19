@@ -9,7 +9,7 @@ services:
     ports:
       - "54035:5432"
     networks:
-      - django-blob-network
+      - django-blog-network
     env_file:
       - .env
     environment:
@@ -17,12 +17,11 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_WORK_MEM='128MB'
   web:
     restart: always
     build: ./src
     networks:
-      - django-blob-network
+      - django-blog-network
     command: >
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py makemigrations &&
@@ -41,6 +40,8 @@ services:
       - db
 
 volumes:
+  postgres_data:
+    driver: local
   static:
     driver: local
   media:
@@ -50,5 +51,5 @@ volumes:
 
 
 networks:
-  django-blob-network:
+  django-blog-network:
     driver: bridge
