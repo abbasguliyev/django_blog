@@ -6,3 +6,4 @@ DB_USER=postgres
 DB_PASSWORD=postgres
 DB_HOST=localhost
 DB_PORT=5432
+CSRF_TRUSTED_ORIGINS=http://localhost,http://127.0.0.1

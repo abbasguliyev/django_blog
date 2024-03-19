@@ -39,6 +39,10 @@ else:
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
+CSRF_TRUSTED_ORIGINS = os.environ["CSRF_TRUSTED_ORIGINS"].split(',')
+CSRF_WHITELIST_ORIGINS =os.environ["CSRF_TRUSTED_ORIGINS"].split(',')
+
+
 # Application definition
 
 INSTALLED_APPS = [
