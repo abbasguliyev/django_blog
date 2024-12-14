@@ -1,8 +1,8 @@
 # django_blog
 
 - Configuration
-    - create .env file in app and main folders
-    - Copy and paste the contents of the env file into the .env file 
+    - create .env file in app folder
+    - Copy and paste the contents of the .env.example file into the .env file 
 - Start without docker
     - python manage.py migrate
     - python manage.py createsuperuser
